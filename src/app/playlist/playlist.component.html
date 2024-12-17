@@ -1,0 +1,9 @@
+<app-container [routerLink]="'/playlist/' + playlist().id">
+  <img
+    [ngSrc]="playlist().images[0].url"
+    height="150"
+    width="150"
+    alt="playlist image"
+  />
+  <span>{{ playlist().name }}</span>
+</app-container>

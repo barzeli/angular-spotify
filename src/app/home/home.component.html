@@ -1,0 +1,9 @@
+<h1>Welcome!</h1>
+<h2>choose a playlist:</h2>
+<div class="playlists-grid">
+  @for (playlist of playlists(); track playlist.id) {
+  <app-playlist [playlist]="playlist" />
+  }@empty {
+  <span>No playlists found!</span>
+  }
+</div>
