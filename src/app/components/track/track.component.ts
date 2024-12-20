@@ -1,13 +1,13 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
-import { SpotifyApiService } from '../spotify-api/spotify-api.service';
+import { SpotifyApiService } from '../../services/spotify-api/spotify-api.service';
 import { NgOptimizedImage } from '@angular/common';
 import { ContainerComponent } from '../container/container.component';
 
 @Component({
-    selector: 'app-track',
-    imports: [NgOptimizedImage, ContainerComponent],
-    templateUrl: './track.component.html',
-    styleUrl: './track.component.less'
+  selector: 'app-track',
+  imports: [NgOptimizedImage, ContainerComponent],
+  templateUrl: './track.component.html',
+  styleUrl: './track.component.less',
 })
 export class TrackComponent implements OnInit {
   spotifyApiService = inject(SpotifyApiService);

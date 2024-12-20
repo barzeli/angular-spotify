@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { SpotifyApiService } from './spotify-api/spotify-api.service';
+import { SpotifyApiService } from './services/spotify-api/spotify-api.service';
 
 export const authGuard: CanActivateFn = async (route) => {
   const spotifyApiService = inject(SpotifyApiService);

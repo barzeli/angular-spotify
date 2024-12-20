@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import SpotifyWebApi from 'spotify-web-api-node';
 // @ts-ignore
 import SpotifyWebApiServer from 'spotify-web-api-node/src/server-methods';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 interface Response<T> {
   body: T;
