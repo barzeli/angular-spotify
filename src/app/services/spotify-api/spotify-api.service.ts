@@ -50,7 +50,7 @@ export class SpotifyApiService {
         'user-read-private',
       ],
       'state_string_wow!',
-      false
+      false,
     );
   }
 
@@ -87,18 +87,18 @@ export class SpotifyApiService {
 
   async getPlaylist(playlistId: string) {
     return await this.proccessApiRequest(
-      this.spotifyApi.getPlaylist(playlistId)
+      this.spotifyApi.getPlaylist(playlistId),
     );
   }
 
   async getPlaylistTracks(playlistId: string) {
     const tracktotal = (
       await this.proccessApiRequest(
-        this.spotifyApi.getPlaylistTracks(playlistId)
+        this.spotifyApi.getPlaylistTracks(playlistId),
       )
     ).total;
     return await this.proccessApiRequest(
-      this.spotifyApi.getPlaylistTracks(playlistId)
+      this.spotifyApi.getPlaylistTracks(playlistId),
     );
   }
 

@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { SpotifyApiService } from '../../services/spotify-api/spotify-api.service';
-import { PlaylistComponent } from '../../playlist/playlist.component';
+import { PlaylistComponent } from '../../components/playlist/playlist.component';
 
 @Component({
   selector: 'app-home',

@@ -20,7 +20,7 @@ export class TrackComponent implements OnInit {
       ? this.track()
           ?.artists.map((artist) => artist.name)
           .join(', ')
-      : undefined
+      : undefined,
   );
 
   async ngOnInit() {
