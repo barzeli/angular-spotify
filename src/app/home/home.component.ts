@@ -10,6 +10,7 @@ import { PlaylistComponent } from '../playlist/playlist.component';
 })
 export class HomeComponent implements OnInit {
   spotifyApiService = inject(SpotifyApiService);
+  userName = this.spotifyApiService.userName;
 
   playlists = signal<SpotifyApi.PlaylistObjectSimplified[]>([]);
 

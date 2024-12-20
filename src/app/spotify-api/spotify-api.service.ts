@@ -14,16 +14,16 @@ interface Response<T> {
   providedIn: 'root',
 })
 export class SpotifyApiService {
-  spotifyApi;
+  spotifyApi = new SpotifyWebApi({
+    clientId: environment.clientId,
+    clientSecret: environment.clientSecret,
+    redirectUri: environment.redirectUri,
+  });
+  userName: string | null = null;
 
   constructor() {
     // @ts-ignore
     SpotifyWebApi._addMethods(SpotifyWebApiServer);
-    this.spotifyApi = new SpotifyWebApi({
-      clientId: environment.clientId,
-      clientSecret: environment.clientSecret,
-      redirectUri: environment.redirectUri,
-    });
   }
 
   async login() {
@@ -54,13 +54,20 @@ export class SpotifyApiService {
     );
   }
 
-  async setAccessToken(code: string) {
+  async getAccessToken(code: string) {
     const { access_token, refresh_token } = (
       await this.spotifyApi.authorizationCodeGrant(code)
     ).body;
 
+    return this.setAccessToken(access_token, refresh_token);
+  }
+
+  async setAccessToken(access_token: string, refresh_token: string) {
     this.spotifyApi.setAccessToken(access_token);
     this.spotifyApi.setRefreshToken(refresh_token);
+
+    localStorage.setItem('access_token', access_token);
+    localStorage.setItem('refresh_token', refresh_token);
   }
 
   async proccessApiRequest<T>(response: Promise<Response<T>>) {
@@ -68,7 +75,9 @@ export class SpotifyApiService {
   }
 
   async getUser() {
-    return this.proccessApiRequest(this.spotifyApi.getMe());
+    const userName = (await this.spotifyApi.getMe()).body.display_name ?? '';
+    this.userName = userName;
+    return userName;
   }
 
   async getUserPlaylists() {
@@ -95,5 +104,11 @@ export class SpotifyApiService {
 
   async getTrackById(trackId: string) {
     return this.proccessApiRequest(this.spotifyApi.getTrack(trackId));
+  }
+
+  logOut() {
+    localStorage.clear();
+    this.spotifyApi.resetAccessToken();
+    this.spotifyApi.resetRefreshToken();
   }
 }
