@@ -104,9 +104,25 @@ export class SpotifyApiService {
         this.spotifyApi.getPlaylistTracks(playlistId)
       )
     ).total;
-    return await this.proccessApiRequest(
-      this.spotifyApi.getPlaylistTracks(playlistId)
+
+    const tracksResponses = await Promise.all(
+      Array(Math.ceil(tracktotal / 100))
+        .fill(0)
+        .map(
+          async (_, index) =>
+            await this.proccessApiRequest(
+              this.spotifyApi.getPlaylistTracks(playlistId, {
+                offset: index * 100,
+              })
+            )
+        )
     );
+
+    return tracksResponses
+      .map((tracksResponse) => tracksResponse.items)
+      .flat()
+      .map((track) => track.track)
+      .filter((track) => !!track);
   }
 
   async getTrackById(trackId: string) {

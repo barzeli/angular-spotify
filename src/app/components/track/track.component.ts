@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import { SpotifyApiService } from '../../services/spotify-api/spotify-api.service';
 import { NgOptimizedImage } from '@angular/common';
 import { ContainerComponent } from '../container/container.component';
@@ -9,21 +9,15 @@ import { ContainerComponent } from '../container/container.component';
   templateUrl: './track.component.html',
   styleUrl: './track.component.less',
 })
-export class TrackComponent implements OnInit {
+export class TrackComponent {
   spotifyApiService = inject(SpotifyApiService);
+  track = input.required<SpotifyApi.TrackObjectFull>();
 
-  trackId = '1H5IfYyIIAlgDX8zguUzns';
-
-  track = signal<SpotifyApi.SingleTrackResponse | undefined>(undefined);
   artists = computed(() =>
     this.track()
       ? this.track()
-          ?.artists.map((artist) => artist.name)
+          .artists.map((artist) => artist.name)
           .join(', ')
-      : undefined,
+      : undefined
   );
-
-  async ngOnInit() {
-    this.track.set(await this.spotifyApiService.getTrackById(this.trackId));
-  }
 }

@@ -1,15 +1,15 @@
 <app-container>
   @if (track()) {
-    <img
-      [ngSrc]="track()!.album.images[0].url"
-      height="150"
-      width="150"
-      alt="album image"
-    />
-    <span>{{ track()!.name }}</span>
-    <span>{{ track()!.album.release_date }}</span>
-    <span>by {{ artists() }}</span>
+  <img
+    [ngSrc]="track().album.images[0].url"
+    height="150"
+    width="150"
+    alt="album image"
+  />
+  <span>{{ track().name }}</span>
+  <span>{{ track().album.release_date }}</span>
+  <span>by {{ artists() }}</span>
   } @else {
-    <span>no track found!</span>
+  <span>no track found!</span>
   }
 </app-container>

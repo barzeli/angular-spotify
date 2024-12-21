@@ -1,2 +1,13 @@
-<span routerLink="/">back</span>
-<p>playlist-page works! {{ playlistId() }}</p>
+<button routerLink="/">back</button>
+
+<!-- <h1>{{ playlist().name }}</h1>
+  <h2>{{ playlist().description }}</h2>
+  <h3>{{ playlist().owner.display_name }}</h3>
+  <img
+    [ngSrc]="playlist().images[0].url"
+    height="150"
+    width="150"
+    alt="playlist image" /> -->
+@for (track of tracks(); track track.id) {
+<app-track [track]="track"></app-track>
+}
