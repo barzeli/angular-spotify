@@ -1,9 +1,10 @@
 <h1>Welcome{{ userName ? ", " + userName : "" }}!</h1>
+<button (click)="logout()">logout</button>
 <h2>choose a playlist:</h2>
 <div class="playlists-grid">
   @for (playlist of playlists(); track playlist.id) {
-    <app-playlist [playlist]="playlist" />
+  <app-playlist [playlist]="playlist" />
   } @empty {
-    <span>No playlists found!</span>
+  <span>No playlists found!</span>
   }
 </div>

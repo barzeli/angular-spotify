@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import SpotifyWebApi from 'spotify-web-api-node';
 // @ts-ignore
 import SpotifyWebApiServer from 'spotify-web-api-node/src/server-methods';
 import { environment } from '../../../environments/environment';
+import { Router } from '@angular/router';
 
 interface Response<T> {
   body: T;
@@ -14,6 +15,8 @@ interface Response<T> {
   providedIn: 'root',
 })
 export class SpotifyApiService {
+  router = inject(Router);
+
   spotifyApi = new SpotifyWebApi({
     clientId: environment.clientId,
     clientSecret: environment.clientSecret,
@@ -50,7 +53,7 @@ export class SpotifyApiService {
         'user-read-private',
       ],
       'state_string_wow!',
-      false,
+      false
     );
   }
 
@@ -75,9 +78,13 @@ export class SpotifyApiService {
   }
 
   async getUser() {
-    const userName = (await this.spotifyApi.getMe()).body.display_name ?? '';
-    this.userName = userName;
-    return userName;
+    try {
+      const userName = (await this.spotifyApi.getMe()).body.display_name ?? '';
+      this.userName = userName;
+      return userName;
+    } catch (error) {
+      return null;
+    }
   }
 
   async getUserPlaylists() {
@@ -87,18 +94,18 @@ export class SpotifyApiService {
 
   async getPlaylist(playlistId: string) {
     return await this.proccessApiRequest(
-      this.spotifyApi.getPlaylist(playlistId),
+      this.spotifyApi.getPlaylist(playlistId)
     );
   }
 
   async getPlaylistTracks(playlistId: string) {
     const tracktotal = (
       await this.proccessApiRequest(
-        this.spotifyApi.getPlaylistTracks(playlistId),
+        this.spotifyApi.getPlaylistTracks(playlistId)
       )
     ).total;
     return await this.proccessApiRequest(
-      this.spotifyApi.getPlaylistTracks(playlistId),
+      this.spotifyApi.getPlaylistTracks(playlistId)
     );
   }
 
@@ -106,9 +113,11 @@ export class SpotifyApiService {
     return this.proccessApiRequest(this.spotifyApi.getTrack(trackId));
   }
 
-  logOut() {
+  logout() {
     localStorage.clear();
     this.spotifyApi.resetAccessToken();
     this.spotifyApi.resetRefreshToken();
+
+    this.router.navigate(['/login']);
   }
 }

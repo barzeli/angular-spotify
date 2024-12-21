@@ -4,6 +4,8 @@ import { SpotifyApiService } from './services/spotify-api/spotify-api.service';
 
 export const authGuard: CanActivateFn = async (route) => {
   const spotifyApiService = inject(SpotifyApiService);
+  const router = inject(Router);
+
   const access_token = localStorage.getItem('access_token');
   const refresh_token = localStorage.getItem('refresh_token');
   if (access_token && refresh_token) {
@@ -20,6 +22,6 @@ export const authGuard: CanActivateFn = async (route) => {
     return true;
   } else {
     localStorage.clear();
-    return inject(Router).parseUrl('/login');
+    return router.parseUrl('/login');
   }
 };

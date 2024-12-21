@@ -17,4 +17,8 @@ export class HomeComponent implements OnInit {
   async ngOnInit() {
     this.playlists.set(await this.spotifyApiService.getUserPlaylists());
   }
+
+  logout() {
+    this.spotifyApiService.logout();
+  }
 }
